@@ -26,8 +26,8 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN python3.11 -m venv docling 
-# RUN source docling/bin/activate 
+RUN python3 -m venv docling 
+RUN source docling/bin/activate 
 
 #RUN python3.11 -m pip install --upgrade pip
 
@@ -43,7 +43,7 @@ ENV TORCH_HOME=/tmp/
 
 # #COPY docs/examples/minimal.py /root/minimal.py
 
-# RUN docling-tools models download
+RUN docling-tools models download
 
 # # On container environments, always set a thread budget to avoid undesired thread congestion.
 # ENV OMP_NUM_THREADS=4
