@@ -14,19 +14,19 @@ FROM ubuntu:latest
 
 #ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 
-RUN apt-get update -y \
-    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
-    && apt-get update -y \
-    && apt-get upgrade -y \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt install -y python3.12 \
-    && apt install -y python3-pip \
-    && apt install -y python3.12-venv \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update -y \
+#    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
+#    && apt-get update -y \
+#    && apt-get upgrade -y \
+#    && apt-get install -y software-properties-common \
+#    && add-apt-repository -y ppa:deadsnakes/ppa \
+#    && apt install -y python3.12 \
+#    && apt install -y python3-pip \
+#    && apt install -y python3.12-venv \
+#    && rm -rf /var/lib/apt/lists/*
 
 
-RUN python3 -m venv docling 
+#RUN python3 -m venv docling 
 # RUN source docling/bin/activate 
 
 #RUN python3.11 -m pip install --upgrade pip
@@ -35,11 +35,11 @@ RUN python3 -m venv docling
 # # This will install torch with *only* cpu support
 # # Remove the --extra-index-url part if you want to install all the gpu requirements
 # # For more details in the different torch distribution visit https://pytorch.org/.
-RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
+#RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
 
 
-ENV HF_HOME=/tmp/
-ENV TORCH_HOME=/tmp/
+#ENV HF_HOME=/tmp/
+#ENV TORCH_HOME=/tmp/
 
 # #COPY docs/examples/minimal.py /root/minimal.py
 
