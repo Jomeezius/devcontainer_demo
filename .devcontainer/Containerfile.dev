@@ -18,8 +18,7 @@ ARG USER_GID=1000
 
 #ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 
-RUN groupadd --gid $USER_GID coder && \
-    useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder && \
+
 
 RUN apt-get update -y \
     && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
