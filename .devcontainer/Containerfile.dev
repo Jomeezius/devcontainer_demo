@@ -6,6 +6,10 @@ FROM ubuntu:latest
 
 #RUN python3.11 -m pip install uv
 
+# 2. Erstellen des unprivilegierten Benutzers 'coder'
+ARG USER_UID=1000
+ARG USER_GID=1000
+
 
 #RUN uv sync
 
@@ -13,6 +17,9 @@ FROM ubuntu:latest
 
 
 #ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
+
+RUN groupadd --gid $USER_GID coder && \
+    useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder && \
 
 RUN apt-get update -y \
     && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
@@ -37,6 +44,11 @@ RUN python3 -m venv docling
 # # For more details in the different torch distribution visit https://pytorch.org/.
 RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
 
+# 3. Legen Sie den Arbeitsordner fest und geben Sie dem Benutzer 'coder' die Rechte
+WORKDIR /home/coder/workspace
+RUN chown -R coder:coder /home/coder
+
+USER coder
 
 ENV HF_HOME=/tmp/
 ENV TORCH_HOME=/tmp/
