@@ -2,10 +2,6 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
 	"name": "Python blueprint devpod",
-	"remoteEnv": {
-        "NVIDIA_VISIBLE_DEVICES": "all",
-        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility"
-    },
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
     "dockerfile": "Containerfile.dev"
