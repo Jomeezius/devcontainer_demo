@@ -39,7 +39,7 @@ RUN apt-get update -y \
 
 #RUN python3.11 -m pip install --upgrade pip
 
-
+RUN ldconfig
 # # This will install torch with *only* cpu support
 # # Remove the --extra-index-url part if you want to install all the gpu requirements
 # # For more details in the different torch distribution visit https://pytorch.org/.
