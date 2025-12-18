@@ -22,16 +22,16 @@ FROM ubuntu:latest
 #RUN groupadd --gid $USER_GID coder2
 #RUN useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder2
 
-#RUN apt-get update -y \
-#    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
-#    && apt-get update -y \
-#    && apt-get upgrade -y \
-#    && apt-get install -y software-properties-common \
-#    && add-apt-repository -y ppa:deadsnakes/ppa \
-#    && apt install -y python3.12 \
-#    && apt install -y python3-pip \
-#    && apt install -y python3.12-venv \
-#    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y \
+    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
+    && apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt install -y python3.12 \
+    && apt install -y python3-pip \
+    && apt install -y python3.12-venv \
+    && rm -rf /var/lib/apt/lists/*
 
 
 #RUN python3 -m venv docling 
