@@ -7,8 +7,8 @@ FROM ubuntu:latest
 #RUN python3.11 -m pip install uv
 
 # 2. Erstellen des unprivilegierten Benutzers 'coder'
-ARG USER_UID=1200
-ARG USER_GID=1200
+#ARG USER_UID=1200
+#ARG USER_GID=1200
 
 
 #RUN uv sync
@@ -19,22 +19,22 @@ ARG USER_GID=1200
 #ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 
 
-RUN groupadd --gid $USER_GID coder2
-RUN useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder2
+#RUN groupadd --gid $USER_GID coder2
+#RUN useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder2
 
-RUN apt-get update -y \
-    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
-    && apt-get update -y \
-    && apt-get upgrade -y \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt install -y python3.12 \
-    && apt install -y python3-pip \
-    && apt install -y python3.12-venv \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update -y \
+#    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
+#    && apt-get update -y \
+#    && apt-get upgrade -y \
+#    && apt-get install -y software-properties-common \
+#    && add-apt-repository -y ppa:deadsnakes/ppa \
+#    && apt install -y python3.12 \
+#    && apt install -y python3-pip \
+#    && apt install -y python3.12-venv \
+#    && rm -rf /var/lib/apt/lists/*
 
 
-RUN python3 -m venv docling 
+#RUN python3 -m venv docling 
 # RUN source docling/bin/activate 
 
 #RUN python3.11 -m pip install --upgrade pip
@@ -43,16 +43,16 @@ RUN python3 -m venv docling
 # # This will install torch with *only* cpu support
 # # Remove the --extra-index-url part if you want to install all the gpu requirements
 # # For more details in the different torch distribution visit https://pytorch.org/.
-RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
+#RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
 
 # 3. Legen Sie den Arbeitsordner fest und geben Sie dem Benutzer 'coder' die Rechte
-WORKDIR /home/coder2/workspace
-RUN chown -R coder2:coder2 /home/coder2
+#WORKDIR /home/coder2/workspace
+#RUN chown -R coder2:coder2 /home/coder2
 
-USER coder2
+#USER coder2
 
-ENV HF_HOME=/tmp/
-ENV TORCH_HOME=/tmp/
+#ENV HF_HOME=/tmp/
+#ENV TORCH_HOME=/tmp/
 
 # #COPY docs/examples/minimal.py /root/minimal.py
 
