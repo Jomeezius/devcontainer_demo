@@ -81,4 +81,4 @@ ENV PATH="/home/coder/.opencode/bin:$PATH"
 RUN mkdir -p /home/coder/.config/opencode \
              /home/coder/.local/share/opencode
 
-COPY opencode.json /home/coder/.config/opencode/opencode.json
+#COPY opencode.json /home/coder/.config/opencode/opencode.json
