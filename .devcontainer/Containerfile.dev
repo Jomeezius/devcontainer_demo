@@ -74,7 +74,7 @@ RUN pipx ensurepath
 
 #RUN curl -fsSL https://opencode.ai/install | bash
 ####
-RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
+RUN curl -fsSL https://opencode.ai/install | bash
 
 ENV PATH="/home/coder/.opencode/bin:$PATH"
 
