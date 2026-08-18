@@ -1,69 +1,84 @@
-##"mcr.microsoft.com/devcontainers/python:1-3.12"
-
-#FROM ubuntu:latest
-FROM nvidia/cuda:12.8.1-runtime-ubuntu24.04
-#RUN microdnf -y install which socat shadow-utils nano git tar python3.11 python3.11-pip python3.11-setuptools python3.11-wheel && alternatives --install /usr/bin/pip pip /usr/bin/pip3.11 1 && alternatives --install /usr/bin/python python /usr/bin/python3.11 1 && microdnf clean all
-
-#RUN python3.11 -m pip install uv
-
-# 2. Erstellen des unprivilegierten Benutzers 'coder'
-#ARG USER_UID=1200
-#ARG USER_GID=1200
+ARG UBUNTU_VERSION=resolute
+FROM ubuntu:${UBUNTU_VERSION}
 
 
-#RUN uv sync
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 
-#RUN uv pip install --editable .
+RUN apt-get update && \
+    apt-get upgrade --yes --no-install-recommends --no-install-suggests && \
+    apt-get install --yes --no-install-recommends --no-install-suggests \
+    ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 
-#ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
-
-
-#RUN groupadd --gid $USER_GID coder2
-#RUN useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m coder2
-
-RUN apt-get update -y \
-    && apt-get install -y libgl1 libglib2.0-0 curl wget git procps tar \
-    && apt-get update -y \
-    && apt-get upgrade -y \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt install -y python3.12 \
-    && apt install -y python3-pip \
-    && apt install -y python3.12-venv \
+# Install baseline packages
+RUN apt-get update && \
+    apt-get install --yes --no-install-recommends --no-install-suggests \
+    bash \
+    build-essential \
+    curl \
+    htop \
+    jq \
+    locales \
+    man \
+    pipx \
+    python3 \
+    python3-pip \
+    software-properties-common \
+    sudo \
+    systemd \
+    systemd-sysv \
+    unzip \
+    vim \
+    wget \
+    rsync \
+    iproute2 && \
+# Install latest Git using their official PPA
+    add-apt-repository ppa:git-core/ppa && \
+    apt-get install --yes git \
     && rm -rf /var/lib/apt/lists/*
 
 
-#RUN python3 -m venv docling 
-# RUN source docling/bin/activate 
+# Generate the desired locale (en_US.UTF-8)
+RUN locale-gen en_US.UTF-8
 
-#RUN python3.11 -m pip install --upgrade pip
+# Make typing unicode characters in the terminal work.
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
+
+# Remove the `ubuntu` user and add a user `coder` so that you're not developing as the `root` user
+RUN userdel -r ubuntu
+
+ARG OPENCODE_VERSION=1.18.4
+ARG USERNAME=coder
+ARG USER_UID=3001
+ARG USER_GID=3001
+RUN groupadd --gid ${USER_GID} ${USERNAME} \
+    && useradd -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+    && usermod -aG sudo ${USERNAME} \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-${USERNAME} \
+    && chmod 0440 /etc/sudoers.d/90-${USERNAME}   
 
 
-# # This will install torch with *only* cpu support
-# # Remove the --extra-index-url part if you want to install all the gpu requirements
-# # For more details in the different torch distribution visit https://pytorch.org/.
-#RUN docling/bin/pip3 install --no-cache-dir docling --extra-index-url https://download.pytorch.org/whl/cpu
+# Workspace & Permissions
+WORKDIR /workspaces
+RUN chown -R ${USERNAME}:${USERNAME} /workspaces
+USER coder
 
-# 3. Legen Sie den Arbeitsordner fest und geben Sie dem Benutzer 'coder' die Rechte
-#WORKDIR /home/coder2/workspace
-#RUN chown -R coder2:coder2 /home/coder2
 
-#USER coder2
+RUN pipx ensurepath
 
-#ENV HF_HOME=/tmp/
-#ENV TORCH_HOME=/tmp/
+#RUN curl -fsSL https://opencode.ai/install | bash
+####
+RUN curl -fsSL https://opencode.ai/install | bash -s -- --version ${OPENCODE_VERSION}
 
-# #COPY docs/examples/minimal.py /root/minimal.py
+ENV PATH="/home/coder/.opencode/bin:$PATH"
 
-# RUN docling-tools models download
+RUN mkdir -p /home/coder/.config/opencode \
+             /home/coder/.local/share/opencode
 
-# # On container environments, always set a thread budget to avoid undesired thread congestion.
-# ENV OMP_NUM_THREADS=4
-
-# # On container shell:
-# # > cd /root/
-# # > python minimal.py
-
-# # Running as `docker run -e DOCLING_ARTIFACTS_PATH=/root/.cache/docling/models` will use the
-# # model weights included in the container image.
+COPY opencode.json /home/coder/.config/opencode/opencode.json
