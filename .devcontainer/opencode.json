@@ -1,18 +1,18 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "disabled_providers": ["opencode"],
-    "model": "qwen/qwen3.5-397b-a17b",
+    "model": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
     "provider": {
         "IONOS-NIM": {
             "npm": "@ai-sdk/openai-compatible",
-            "name": "qwen3.5-397b-a17b NIM (intern)",
+            "name": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 NIM (intern)",
             "options": {
-                "baseURL": "http://test:8080/v1",
+                "baseURL": "http://192.168.34.122:8000/v1",
                 "apiKey": "{env:IONOS_GEMMA4_API_KEY}"
             },
             "models": {
-                "qwen/qwen3.5-397b-a17b": {
-                    "name": "ionos-model-qwen3.5",
+                "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4": {
+                    "name": "vllm-model-Nemo-Lightning",
                     "limit": {
                         "context": 128000,
                         "output": 8192
