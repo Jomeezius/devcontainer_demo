@@ -3,7 +3,7 @@
     "disabled_providers": ["opencode"],
     "model": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
     "provider": {
-        "IONOS-NIM": {
+        "DEV-NIM": {
             "npm": "@ai-sdk/openai-compatible",
             "name": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 NIM (intern)",
             "options": {
