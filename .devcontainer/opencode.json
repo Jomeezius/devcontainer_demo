@@ -1,7 +1,7 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "disabled_providers": ["opencode"],
-    "model": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+    "model": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
     "provider": {
         "DEV-NIM": {
             "npm": "@ai-sdk/openai-compatible",
