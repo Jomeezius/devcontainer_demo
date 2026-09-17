@@ -5,14 +5,14 @@
     "provider": {
         "DEV-NIM": {
             "npm": "@ai-sdk/openai-compatible",
-            "name": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 NIM (intern)",
+            "name": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 (intern)",
             "options": {
-                "baseURL": "http://192.168.34.122:8000/v1",
+                "baseURL": "http://[ip]:8000/v1",
                 "apiKey": "{env:API_KEY}"
             },
             "models": {
-                "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4": {
-                    "name": "vllm-model-Nemo-Lightning",
+                "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4": {
+                    "name": "vllm-model-Nemotron-Super-120B",
                     "limit": {
                         "context": 128000,
                         "output": 8192
